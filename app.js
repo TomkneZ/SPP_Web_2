@@ -9,7 +9,12 @@ var coursesRouter = require('./routes/courses');
 var professorsRouter = require('./routes/professors');
 var studentsRouter = require('./routes/students');
 
+const cors = require('cors');
+
 var app = express();
+
+app.use(cors());
+app.options('*', cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

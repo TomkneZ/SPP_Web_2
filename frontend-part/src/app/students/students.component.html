@@ -6,6 +6,30 @@
     <title></title>
 </head>
 <body>
-    Students page will be here!
+    <p>Students:</p>
+    <table mat-table [dataSource]="students" class="mat-elevation-z8">
+        <container matColumnDef="first_name">
+            <th mat-header-cell *matHeaderCellDef> First Name </th>
+            <td mat-cell *matCellDef="let student"> {{student?.first_name}} </td>
+        </container>
+
+        <container matColumnDef="last_name">
+            <th mat-header-cell *matHeaderCellDef> Last Name </th>
+            <td mat-cell *matCellDef="let student"> {{student?.last_name}} </td>
+        </container>
+
+        <container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef> Phone </th>
+            <td mat-cell *matCellDef="let student"> {{student?.phone}} </td>
+        </container>
+
+        <container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let student"> {{student?.email}} </td>
+        </container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </body>
 </html>
