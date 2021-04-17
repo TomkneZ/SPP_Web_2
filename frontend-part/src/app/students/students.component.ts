@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
     ]
 })
 
-export class StudentsComponent {   
+export class StudentsComponent {
     public dataSource;
     public displayedColumns: string[] = ['first_name', 'last_name', 'phone', 'email'];
     private subscription: Subscription = new Subscription();
@@ -25,7 +25,7 @@ export class StudentsComponent {
 
     public constructor(private studentsService: StudentsService) {
         this.loadStudents();
-    }     
+    }
 
     public ngOnDestroy(): void {
         this.subscription.unsubscribe();
@@ -39,16 +39,12 @@ export class StudentsComponent {
                         this.dataSource = new MatTableDataSource(data),
                         this.dataSource.sort = this.sort
                     }
-                )
+            )
         );
     }
 
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    onRowClicked(row) {
-        console.log('This will be for adding to the selected course ', row);
     }
 }

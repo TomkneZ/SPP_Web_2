@@ -30,15 +30,70 @@
             </form>
         </div>
     </nav>
-    <!--<main role="main" class="container">
-        <div class="jumbotron">
-            <h1>Navbar example</h1>
-            <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
-            <a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs &raquo;</a>
-        </div>
-    </main>-->
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->    
+    <div class="available-courses">
+
+        <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+
+        <mat-table *ngIf="displayAvailable; else added" class="available-courses-table mat-elevation-z8" [dataSource]="availableCoursesDataSource"
+                   matSort matSortDirection="asc" matSortDisableClear>
+
+            <ng-container matColumnDef="name">
+
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Course name</mat-header-cell>
+
+                <mat-cell class="table-cell"
+                          *matCellDef="let course">{{course.name}}</mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="unique_code">
+
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Unique code</mat-header-cell>
+
+                <mat-cell class="table-cell"
+                          *matCellDef="let course">{{course.unique_code}}</mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"
+                     (click)="onRowClicked(row)">
+            </mat-row>
+        </mat-table>
+        <ng-template #added>
+            <h1>Course was added! Here you can see list of already added courses</h1>
+            <mat-table class="available-courses-table mat-elevation-z8" [dataSource]="addedCoursesDataSource"
+                       matSort matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="name">
+
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Course name</mat-header-cell>
+
+                    <mat-cell class="table-cell"
+                              *matCellDef="let course">{{course.name}}</mat-cell>
+
+                </ng-container>
+
+                <ng-container matColumnDef="unique_code">
+
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Unique code</mat-header-cell>
+
+                    <mat-cell class="table-cell"
+                              *matCellDef="let course">{{course.unique_code}}</mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: displayedColumns"
+                         (click)="onRowClicked(row)">
+                </mat-row>
+            </mat-table>
+        </ng-template>
+    </div>
 </body>
 </html>
