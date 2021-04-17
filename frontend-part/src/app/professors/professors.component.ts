@@ -1,7 +1,9 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Person } from '../models/person';
 import { ProfessorsService } from './professors.service';
 import { Subscription } from 'rxjs';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from "@angular/material/table";
 
 @Component({
     selector: 'professors-app',
@@ -13,9 +15,13 @@ import { Subscription } from 'rxjs';
 })
 
 export class ProfessorsComponent {
-    public professors: Person[];
+    public dataSource;
     public displayedColumns: string[] = ['first_name', 'last_name', 'phone', 'email'];
     private subscription: Subscription = new Subscription();
+
+    @ViewChild(MatSort) sort: MatSort;
+
+    @ViewChild('input') input: ElementRef;
 
     public constructor(private professorsService: ProfessorsService) {
         this.loadProfessors();
@@ -29,8 +35,16 @@ export class ProfessorsComponent {
         this.subscription.add(
             this.professorsService.getActiveProfessors()
                 .subscribe(
-                    (data: Person[]) => this.professors = data
+                    (data: Person[]) => {
+                        this.dataSource = new MatTableDataSource(data),
+                        this.dataSource.sort = this.sort
+                    }
                 )
         );
+    }
+
+    applyFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 }

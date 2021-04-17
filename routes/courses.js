@@ -5,6 +5,8 @@ var router = express.Router();
 
 var controller = require('../controllers/coursesController');
 
+router.get('/getactivecourses', controller.get_active_courses);
+
 router.post('/addcourse', controller.add_course);
 
 router.post('/addstudenttocourse', controller.add_student_to_course);

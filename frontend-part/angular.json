@@ -12,6 +12,9 @@
             "outputPath": "dist/frontend-part",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "styles": [
+              "src/styles.scss"
+            ],
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.json",
             "aot": true

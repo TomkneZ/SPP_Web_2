@@ -3,33 +3,89 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-    <p>Students:</p>
-    <table mat-table [dataSource]="professors" class="mat-elevation-z8">
-        <container matColumnDef="first_name">
-            <th mat-header-cell *matHeaderCellDef> First Name </th>
-            <td mat-cell *matCellDef="let professor"> {{professor?.first_name}} </td>
-        </container>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" href="#">Educational System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link">Professors<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/students">Students</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="courses">Courses</a>
+                </li>
+            </ul>
+            <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
 
-        <container matColumnDef="last_name">
-            <th mat-header-cell *matHeaderCellDef> Last Name </th>
-            <td mat-cell *matCellDef="let professor"> {{professor?.last_name}} </td>
-        </container>
+    <div class="professors">
 
-        <container matColumnDef="phone">
-            <th mat-header-cell *matHeaderCellDef> Phone </th>
-            <td mat-cell *matCellDef="let professor"> {{professor?.phone}} </td>
-        </container>
+        <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
 
-        <container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let professor"> {{professor?.email}} </td>
-        </container>
+        <mat-table class="professors-table mat-elevation-z8" [dataSource]="dataSource"
+                   matSort matSortDirection="asc" matSortDisableClear>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+            <ng-container matColumnDef="first_name">
+
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</mat-header-cell>
+
+                <mat-cell class="table-cell"
+                          *matCellDef="let professor">{{professor.first_name}}</mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="last_name">
+
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Lastname</mat-header-cell>
+
+                <mat-cell class="table-cell"
+                          *matCellDef="let professor">{{professor.last_name}}</mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="phone">
+
+                <mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
+
+                <mat-cell class="table-cell"
+                          *matCellDef="let professor">{{professor?.phone}}</mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+
+                <mat-cell class="table-cell"
+                          *matCellDef="let professor">{{professor?.email}}</mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns">
+            </mat-row>
+
+        </mat-table>
+    </div>
+
+
 </body>
 </html>
