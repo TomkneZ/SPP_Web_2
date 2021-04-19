@@ -1,7 +1,7 @@
 ﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -10,7 +10,8 @@ import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
 import { ProfessorsComponent } from './professors/professors.component';
 import { StudentsComponent } from './students/students.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 // Angular Material.
 import { MatInputModule } from '@angular/material/input';
@@ -19,12 +20,14 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 
+import { AuthGuard } from './guards/auth.guard';
 
 const appRoutes: Routes = [
     { path: '', component: LoginComponent },
-    { path: 'students', component: StudentsComponent },
-    { path: 'professors', component: ProfessorsComponent },
-    { path: 'courses', component: CoursesComponent }
+    { path: 'register', component: RegisterComponent },
+    { path: 'students', component: StudentsComponent, canActivate: [AuthGuard] },
+    { path: 'professors', component: ProfessorsComponent, canActivate: [AuthGuard] },
+    { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -42,14 +45,16 @@ const appRoutes: Routes = [
         MatProgressSpinnerModule,
         MatSortModule,
         MatTableModule,
-        MatButtonModule
+        MatButtonModule,
+        ReactiveFormsModule
     ],
     declarations: [
         AppComponent,
         LoginComponent,
         CoursesComponent,
         StudentsComponent,
-        ProfessorsComponent
+        ProfessorsComponent,
+        RegisterComponent
     ],
     bootstrap: [AppComponent]
 })

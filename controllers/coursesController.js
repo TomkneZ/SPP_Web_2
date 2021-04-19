@@ -1,8 +1,5 @@
-var Professor = require('../models/professor');
 var Student = require('../models/student');
 var Course = require('../models/course');
-const student = require('../models/student');
-const course = require('../models/course');
 
 exports.add_course = function (req, res) {
     Student.findOne({ last_name: 'Petrov' }, function (err, stud1) {

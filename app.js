@@ -8,12 +8,17 @@ var indexRouter = require('./routes/index');
 var coursesRouter = require('./routes/courses');
 var professorsRouter = require('./routes/professors');
 var studentsRouter = require('./routes/students');
+var usersRouter = require('./routes/users');
 
 const cors = require('cors');
 
 var app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        process.env.FRONTEND_URL
+    ], credentials: true
+}));
 app.options('*', cors());
 
 // view engine setup
@@ -30,6 +35,7 @@ app.use('/', indexRouter);
 app.use('/courses', coursesRouter);
 app.use('/students', studentsRouter);
 app.use('/professors', professorsRouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

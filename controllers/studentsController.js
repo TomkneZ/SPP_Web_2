@@ -1,8 +1,6 @@
 var Student = require('../models/student');
 var School = require('../models/school');
 var SchoolType = require('../models/schooltype');
-const schooltype = require('../models/schooltype');
-const school = require('../models/school');
 
 exports.get_active_students = function (req, res) {
     Student.find({ is_account_active: true }, function (err, docs) {
