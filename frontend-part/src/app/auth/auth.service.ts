@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environment/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {    
     private loginUserUrl = 'users/loginuser';
-
+    private logoutUserUrl = 'users/me/logout';
     private addUserUrl = 'users/adduser';
+    private subscription: Subscription = new Subscription();
 
-    public constructor(private http: HttpClient, private cookieService: CookieService) {
-       
-    }
+    public constructor(
+        private http: HttpClient,
+        private cookieService: CookieService,
+        private router: Router) { }
 
     public get currentUserToken(): Boolean {
         if (this.cookieService.get('token')) {
@@ -34,7 +37,16 @@ export class AuthService {
         return this.http.post(`${environment.host}${this.addUserUrl}`, body, { withCredentials: true });    
     }
 
-    public logout(): void {
-        this.cookieService.deleteAll();
+    public logout(): void {    
+        this.http.post(`${environment.host}${this.logoutUserUrl}`, null, { withCredentials: true })
+            .subscribe(
+                () => {
+                    this.cookieService.deleteAll();
+                    this.router.navigate(['']);
+                },
+                (error) => {
+                    console.log(error);
+                }
+        );       
     }    
 }

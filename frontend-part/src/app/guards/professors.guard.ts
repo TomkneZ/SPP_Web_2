@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
+export class ProfessorsGuard implements CanActivate {
     constructor(
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private cookieService: CookieService
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const currentUserToken = this.authService.currentUserToken;
-        if (currentUserToken) {
+        const currentRole = this.cookieService.get('role');
+        if (currentRole == 'professor') {
             return true;
         }
 
-        this.router.navigate([''], { queryParams: { returnUrl: state.url } });
+        this.router.navigate(['professorscourses'], { queryParams: { returnUrl: state.url } });
         return false;
     }
 }

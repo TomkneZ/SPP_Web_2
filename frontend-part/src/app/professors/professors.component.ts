@@ -4,6 +4,8 @@ import { ProfessorsService } from './professors.service';
 import { Subscription } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from "@angular/material/table";
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'professors-app',
@@ -23,7 +25,10 @@ export class ProfessorsComponent {
 
     @ViewChild('input') input: ElementRef;
 
-    public constructor(private professorsService: ProfessorsService) {
+    public constructor(
+        private professorsService: ProfessorsService,
+        private authService: AuthService,
+        private router: Router) {
         this.loadProfessors();
     }
 
@@ -37,14 +42,18 @@ export class ProfessorsComponent {
                 .subscribe(
                     (data: Person[]) => {
                         this.dataSource = new MatTableDataSource(data),
-                        this.dataSource.sort = this.sort
+                            this.dataSource.sort = this.sort
                     }
                 )
         );
     }
 
-    applyFilter(event: Event) {
+    public applyFilter(event: Event): void {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    public onLogout(): void {
+        this.authService.logout();
     }
 }

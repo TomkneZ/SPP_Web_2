@@ -4,8 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { first } from 'rxjs/operators';
-import { error } from 'console';
 
 @Component({
     selector: 'login-app',

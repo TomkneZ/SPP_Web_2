@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { CoursesService } from './courses.service'
 import { Course } from '../models/course';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'courses-app',
@@ -26,7 +27,9 @@ export class CoursesComponent {
 
     @ViewChild('input') input: ElementRef;
 
-    public constructor(private coursesService: CoursesService) {
+    public constructor(
+        private coursesService: CoursesService,
+        private authService: AuthService) {
         this.loadAvailableCourses();
     }
 
@@ -46,7 +49,7 @@ export class CoursesComponent {
         );
     }
 
-    applyFilter(event: Event) {
+    public applyFilter(event: Event): void {
         const filterValue = (event.target as HTMLInputElement).value;
         this.availableCoursesDataSource.filter = filterValue.trim().toLowerCase();
     }
@@ -63,7 +66,7 @@ export class CoursesComponent {
         );
     }
 
-    onRowClicked(row) {
+    public onRowClicked(row): void {
         const courseId = row._id;
         this.subscription.add(
             this.coursesService.addStudentToCourse(this.studentId, courseId)
@@ -75,5 +78,9 @@ export class CoursesComponent {
                 )
         );   
         
+    }
+
+    public onLogout(): void {
+        this.authService.logout();
     }
 }

@@ -2,14 +2,10 @@ var Student = require('../models/student');
 var Course = require('../models/course');
 
 exports.add_course = function (req, res) {
-    Student.findOne({ last_name: 'Petrov' }, function (err, stud1) {
-        Student.findOne({ last_name: 'Ivanov' }, function (err, stud2) {
-            var course = new Course({ name: 'OZI2', unique_code: 346, students: [stud2._id] });
-            course.save(function (err) {
-                if (err) return console.log(err);
-                res.send(`model ${course} was added`);
-            });
-        });
+    var course = new Course({ name: req.body.name, unique_code: req.body.unique_code });
+    course.save(function (err) {
+        if (err) return console.log(err);
+        res.send(`model ${course} was added`);
     });
 };
 

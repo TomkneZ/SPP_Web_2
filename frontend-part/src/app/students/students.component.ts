@@ -4,6 +4,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { Person } from '../models/person';
 import { StudentsService } from './students.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'students-app',
@@ -23,7 +24,9 @@ export class StudentsComponent {
 
     @ViewChild('input') input: ElementRef;
 
-    public constructor(private studentsService: StudentsService) {
+    public constructor(
+        private studentsService: StudentsService,
+        private authService: AuthService) {
         this.loadStudents();
     }
 
@@ -43,8 +46,12 @@ export class StudentsComponent {
         );
     }
 
-    applyFilter(event: Event) {
+    public applyFilter(event: Event): void {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    public onLogout(): void {
+        this.authService.logout();
     }
 }

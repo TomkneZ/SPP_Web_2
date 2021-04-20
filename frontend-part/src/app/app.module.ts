@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Components.
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
+import { AddCourseComponent } from './courses/add-course/courses.component';
 import { ProfessorsComponent } from './professors/professors.component';
 import { StudentsComponent } from './students/students.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'students', component: StudentsComponent, canActivate: [AuthGuard] },
     { path: 'professors', component: ProfessorsComponent, canActivate: [AuthGuard] },
-    { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] }
+    { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
+    { path: 'addcourse', component: AddCourseComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -52,6 +54,7 @@ const appRoutes: Routes = [
         AppComponent,
         LoginComponent,
         CoursesComponent,
+        AddCourseComponent,
         StudentsComponent,
         ProfessorsComponent,
         RegisterComponent

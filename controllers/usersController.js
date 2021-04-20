@@ -25,10 +25,6 @@ exports.login_user = async function (req, res) {
     }
 }
 
-exports.get_user_profile = async function (req, res) {
-    res.send(req.user);
-}
-
 exports.logout_user = async function (req, res) {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
