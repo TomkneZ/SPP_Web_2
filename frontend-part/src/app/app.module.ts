@@ -22,6 +22,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 
 import { AuthGuard } from './guards/auth.guard';
+import { ProfessorsGuard } from './guards/professors.guard';
 
 const appRoutes: Routes = [
     { path: '', component: LoginComponent },
@@ -29,7 +30,7 @@ const appRoutes: Routes = [
     { path: 'students', component: StudentsComponent, canActivate: [AuthGuard] },
     { path: 'professors', component: ProfessorsComponent, canActivate: [AuthGuard] },
     { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
-    { path: 'addcourse', component: AddCourseComponent, canActivate: [AuthGuard] }
+    { path: 'addcourse', component: AddCourseComponent, canActivate: [AuthGuard, ProfessorsGuard] }
 ];
 
 @NgModule({

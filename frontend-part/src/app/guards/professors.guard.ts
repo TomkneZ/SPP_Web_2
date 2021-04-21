@@ -17,7 +17,7 @@ export class ProfessorsGuard implements CanActivate {
             return true;
         }
 
-        this.router.navigate(['professorscourses'], { queryParams: { returnUrl: state.url } });
+        this.router.navigate(['courses'], { queryParams: { returnUrl: state.url } });
         return false;
     }
 }
