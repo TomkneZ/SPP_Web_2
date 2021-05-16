@@ -4,15 +4,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { MatRadioModule } from '@angular/material/radio';
 
 // Components.
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './courses/courses.component';
+import { AdminCoursesComponent } from './courses/admin-courses/courses.component';
 import { AddCourseComponent } from './courses/add-course/courses.component';
 import { ProfessorsComponent } from './professors/professors.component';
+import { AdminProfessorsComponent } from './professors/admin-professors/professors.component';
 import { StudentsComponent } from './students/students.component';
+import { AdminStudentsComponent } from './students/admin-students/students.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { AddProfessorComponent } from './professors/add-professor/professors.component';
+import { AddStudentComponent } from './students/add-student/students.component';
 
 // Angular Material.
 import { MatInputModule } from '@angular/material/input';
@@ -23,14 +29,20 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ProfessorsGuard } from './guards/professors.guard';
+import { AdminsGuard } from './guards/admins.guard';
 
 const appRoutes: Routes = [
     { path: '', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'students', component: StudentsComponent, canActivate: [AuthGuard] },
+    { path: 'adminstudents', component: AdminStudentsComponent, canActivate: [AuthGuard, AdminsGuard] },
     { path: 'professors', component: ProfessorsComponent, canActivate: [AuthGuard] },
+    { path: 'adminprofessors', component: AdminProfessorsComponent, canActivate: [AuthGuard, AdminsGuard] },
     { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
-    { path: 'addcourse', component: AddCourseComponent, canActivate: [AuthGuard, ProfessorsGuard] }
+    { path: 'admincourses', component: AdminCoursesComponent, canActivate: [AuthGuard, AdminsGuard] },
+    { path: 'addcourse', component: AddCourseComponent, canActivate: [AuthGuard, ProfessorsGuard] },
+    { path: 'addprofessor', component: AddProfessorComponent, canActivate: [AuthGuard, AdminsGuard] },
+    { path: 'addstudent', component: AddStudentComponent, canActivate: [AuthGuard, AdminsGuard] }
 ];
 
 @NgModule({
@@ -49,7 +61,8 @@ const appRoutes: Routes = [
         MatSortModule,
         MatTableModule,
         MatButtonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatRadioModule
     ],
     declarations: [
         AppComponent,
@@ -58,7 +71,12 @@ const appRoutes: Routes = [
         AddCourseComponent,
         StudentsComponent,
         ProfessorsComponent,
-        RegisterComponent
+        RegisterComponent,
+        AdminStudentsComponent,
+        AdminCoursesComponent,
+        AdminProfessorsComponent,
+        AddStudentComponent,
+        AddProfessorComponent
     ],
     bootstrap: [AppComponent]
 })

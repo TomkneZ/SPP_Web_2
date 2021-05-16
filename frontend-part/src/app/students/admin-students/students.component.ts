@@ -1,22 +1,22 @@
 ﻿import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Person } from '../models/person';
-import { ProfessorsService } from './professors.service';
-import { Subscription } from 'rxjs';
-import { MatSort } from '@angular/material/sort';
+import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { AuthService } from '../auth/auth.service';
+import { Person } from '../../models/person';
+import { StudentsService } from '../students.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'professors-app',
-    templateUrl: './professors.component.html',
-    styleUrls: ['./professors.component.scss'],
+    selector: 'students-app',
+    templateUrl: './students.component.html',
+    styleUrls: ['./students.component.scss'],
     providers: [
-        ProfessorsService
+        StudentsService
     ]
 })
 
-export class ProfessorsComponent {
+export class AdminStudentsComponent {
     public dataSource;
     public displayedColumns: string[] = ['first_name', 'last_name', 'phone', 'email'];
     private subscription: Subscription = new Subscription();
@@ -26,28 +26,25 @@ export class ProfessorsComponent {
     @ViewChild('input') input: ElementRef;
 
     public constructor(
-        private professorsService: ProfessorsService,
+        private studentsService: StudentsService,
         private authService: AuthService,
         private router: Router) {
-        if (this.authService.currentUserRole == 'admin') {
-            this.router.navigate(['adminprofessors']);
-        } 
-        this.loadProfessors();
+        this.loadStudents();
     }
 
     public ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
 
-    public loadProfessors(): void {
+    public loadStudents(): void {
         this.subscription.add(
-            this.professorsService.getActiveProfessors()
+            this.studentsService.getActiveStudents()
                 .subscribe(
                     (data: Person[]) => {
                         this.dataSource = new MatTableDataSource(data),
-                            this.dataSource.sort = this.sort
+                        this.dataSource.sort = this.sort
                     }
-                )
+            )
         );
     }
 
@@ -58,5 +55,9 @@ export class ProfessorsComponent {
 
     public onLogout(): void {
         this.authService.logout();
+    }
+
+    public goToAdd(): void {
+        this.router.navigate(['addstudent']);
     }
 }

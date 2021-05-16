@@ -15,10 +15,10 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/professors">Professors</a>
+                    <a class="nav-link" href="/adminprofessors">Professors</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/students">Students</a>
+                    <a class="nav-link" href="/adminstudents">Students</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link">Courses<span class="sr-only">(current)</span></a>
@@ -31,6 +31,9 @@
             </form>
         </div>
     </nav>
+
+    <button mat-stroked-button (click)="goToAdd()">Add</button>
+
     <div class="available-courses">
 
         <mat-form-field>
@@ -86,10 +89,13 @@
                     <mat-cell class="table-cell"
                               *matCellDef="let course">{{course.unique_code}}</mat-cell>
 
-                </ng-container>                
+                </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                
+
+                <mat-row *matRowDef="let row; columns: displayedColumns"
+                         (click)="onRowClicked(row)">
+                </mat-row>
             </mat-table>
         </ng-template>
     </div>

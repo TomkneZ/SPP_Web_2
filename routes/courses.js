@@ -14,6 +14,4 @@ router.post('/addcourse', controller.add_course);
 
 router.post('/addstudenttocourse/:student/:course', controller.add_student_to_course);
 
-router.delete('/deletestudentfromcourse/:student/:course', controller.delete_student_from_course);
-
 module.exports = router;

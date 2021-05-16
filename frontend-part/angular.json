@@ -29,5 +29,8 @@
       }
     }
   },
-  "defaultProject": "sppwebapp"
+  "defaultProject": "sppwebapp",
+  "cli": {
+    "analytics": "eb88c202-6c67-4413-aff1-36b1096a0a1c"
+  }
 }

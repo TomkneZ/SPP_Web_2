@@ -26,6 +26,10 @@ export class AuthService {
         }
     }
 
+    public get currentUserRole(): string {
+        return this.cookieService.get('role');        
+    }
+
     public login(email: string, password: string): Observable<Object> {
         const body = { email: email, password: password };
         return this.http.post(`${environment.host}${this.loginUserUrl}`, body, { withCredentials: true });         

@@ -58,7 +58,3 @@ exports.add_student_to_course = function (req, res) {
         })
     })
 };
-
-exports.delete_student_from_course = function (req, res) {
-    res.send('NOT IMPLEMENTED: Delete student from course');
-};

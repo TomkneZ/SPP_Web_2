@@ -4,7 +4,7 @@ var School = require('../models/school');
 var SchoolType = require('../models/schooltype');
 
 exports.get_active_professors = function (req, res) {
-    Professor.find({is_account_active: true}, function (err, docs) {
+    Professor.find({ is_account_active: true }, function (err, docs) {
         if (err) console.log(err);
         res.send(docs);
     })
@@ -28,14 +28,14 @@ exports.edit_professor = function (req, res) {
 };
 
 exports.add_professor = function (req, res) {
-    var school_type3 = new SchoolType({ name: 'High school' });
-    var school = new School({ name: 'Liceum BSU Minsk City', is_active: true, school_type: school_type3 });
     var professor = new Professor({
-        first_name: 'Ktoto', last_name: 'Ktotov', email: 'ktotov@example.com',
-        is_account_active: false, school: school
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        is_account_active: req.body.is_account_active
     });
     professor.save(function (err) {
         if (err) return console.log(err);
-        res.send(professor);
-    })
+        res.send(`model ${professor} was added`)
+    });
 };

@@ -1,11 +1,11 @@
 ﻿import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
-import { CoursesService } from './courses.service'
-import { Course } from '../models/course';
+import { CoursesService } from '../courses.service'
+import { Course } from '../../models/course';
 import { MatTableDataSource } from '@angular/material/table';
-import { AuthService } from '../auth/auth.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'courses-app',
@@ -13,15 +13,12 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     styleUrls: ['./courses.component.scss'],
     providers: [
         CoursesService
-    ]    
+    ]
 })
 
-export class CoursesComponent {
+export class AdminCoursesComponent {
     public availableCoursesDataSource;
     public addedCoursesDataSource;
-
-    public isExpansionProfessorRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
-    public expandedElement: any;
     public displayedColumns: string[] = ['name', 'unique_code'];
     private subscription: Subscription = new Subscription();
     private studentId = '607742916308a64f7447bf8b';
@@ -33,7 +30,8 @@ export class CoursesComponent {
 
     public constructor(
         private coursesService: CoursesService,
-        private authService: AuthService) {
+        private authService: AuthService,
+        private router: Router) {
         this.loadAvailableCourses();
     }
 
@@ -86,5 +84,9 @@ export class CoursesComponent {
 
     public onLogout(): void {
         this.authService.logout();
+    }
+
+    public goToAdd(): void {
+        this.router.navigate(['addcourse']);
     }
 }

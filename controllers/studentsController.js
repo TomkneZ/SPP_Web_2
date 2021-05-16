@@ -23,16 +23,14 @@ exports.get_school_active_students = function (req, res) {
 };
 
 exports.add_student = function (req, res) {
-    var school_type1 = new SchoolType({ name: 'Primary school' });
-    var school_type2 = new SchoolType({ name: 'Secondary school' });
-    var school_type3 = new SchoolType({ name: 'High school' });
-    var school = new School({ name: 'Liceum BSU Minsk City', is_active: true, school_type: school_type3 });
     var student = new Student({
-        first_name: 'Petr', last_name: 'Petrov', email: 'petrov@example.com', phone: '+123456788909',
-        is_account_active: false, school: school
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        is_account_active: req.body.is_account_active
     });
     student.save(function (err) {
         if (err) return console.log(err);
-        res.send(student);
-    })
+        res.send(`model ${student} was added`)
+    });
 };

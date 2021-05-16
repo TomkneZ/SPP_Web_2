@@ -1,11 +1,12 @@
 ﻿import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Person } from '../models/person';
-import { ProfessorsService } from './professors.service';
+import { Person } from '../../models/person';
+import { ProfessorsService } from '../professors.service';
 import { Subscription } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from "@angular/material/table";
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'professors-app',
@@ -16,9 +17,10 @@ import { Router } from '@angular/router';
     ]
 })
 
-export class ProfessorsComponent {
+export class AdminProfessorsComponent {
     public dataSource;
     public displayedColumns: string[] = ['first_name', 'last_name', 'phone', 'email'];
+    expandedProfessor: Person | null;
     private subscription: Subscription = new Subscription();
 
     @ViewChild(MatSort) sort: MatSort;
@@ -29,9 +31,6 @@ export class ProfessorsComponent {
         private professorsService: ProfessorsService,
         private authService: AuthService,
         private router: Router) {
-        if (this.authService.currentUserRole == 'admin') {
-            this.router.navigate(['adminprofessors']);
-        } 
         this.loadProfessors();
     }
 
@@ -58,5 +57,9 @@ export class ProfessorsComponent {
 
     public onLogout(): void {
         this.authService.logout();
+    }
+
+    public goToAdd(): void {
+        this.router.navigate(['addprofessor']);
     }
 }

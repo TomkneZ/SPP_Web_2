@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
         private router: Router) {
         if (this.authService.currentUserToken) {
             this.router.navigate(['professors']);
-        }
+        } 
     }
 
     public ngOnInit(): void {
